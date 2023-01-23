@@ -45,17 +45,32 @@ $list = array (
 	'20:30-21:30',
 	'21:30-22:30',
 );
-
-
-// Функция первая
-function isValid(string $timeInter){
+// Доп. функция для преобразования строки в DataTime
+function str_to_time($timeInter){
 	list($start, $end) = explode('-',$timeInter);
 	$tbeg =date_create_from_format('!H:i',$start);
 	$tend =date_create_from_format('!H:i',$end);
+	return array($tbeg , $tend);
+};
+
+// Функция первая
+function isValid(string $timeInter){
+	list($tbeg, $tend) = str_to_time($timeInter);
 	return !($tbeg>=$tend);
 };
 //Функция вторая
-
+function checkInterval(string $timeInter){
+	global $list;
+	list($tbeg, $tend) = str_to_time($timeInter);
+	foreach ($list as $item){
+		list($itemBeg,$itemEnd) = str_to_time($item);
+		if ((($tbeg>$itemBeg) && ($tbeg<$itemEnd )) || (($tend>$itemBeg)&&($tend<$itemEnd))){
+			return false;
+		}
+	}
+	return true;
+};
 // Вызов
-var_dump(isValid('10:59-11:00'))
+var_dump(isValid('10:59-11:00'));
+var_dump(checkInterval('20:00-20:31'))
 ?>
