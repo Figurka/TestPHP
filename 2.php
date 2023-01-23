@@ -46,4 +46,16 @@ $list = array (
 	'21:30-22:30',
 );
 
+
+// Функция первая
+function isValid(string $timeInter){
+	list($start, $end) = explode('-',$timeInter);
+	$tbeg =date_create_from_format('!H:i',$start);
+	$tend =date_create_from_format('!H:i',$end);
+	return !($tbeg>=$tend);
+};
+//Функция вторая
+
+// Вызов
+var_dump(isValid('10:59-11:00'))
 ?>
