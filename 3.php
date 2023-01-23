@@ -24,3 +24,31 @@
 
 # Использовать данные:
 # любые
+abstract class Transporter{
+    public $brand; // Наименование перевозчика
+    protected float $cost = 0; // Цена перевозки по умолчанию/минимальная цена перевозки
+
+    function __construct($brand,)
+    {
+       
+
+    }
+    // Метод расчета стоимости доставки.
+    abstract public function transitCost();
+};
+
+class DHL{
+    public $brand = 'DHL';
+    public function transitCost($weight){
+        $this->cost=$weight*100;
+        return $this->cost;
+    }
+};
+class RussianPost{
+    public $brand = 'Russian Post';
+    public function transitCost($weight){
+        $this->cost=($weight>10) ? 100: 1000;
+    }
+};
+
+?>
