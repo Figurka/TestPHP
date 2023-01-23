@@ -78,4 +78,32 @@ $workers = array (
 		),
 );
 
+// Функция
+
+function findWorker(string $area){
+	global $areas,$nearby,$workers;
+	if (in_array($area,$areas,$strict = true)){
+		foreach($workers as $work){
+			if ($area===$work['area_name']){
+				return $work['login'];
+			}
+		}
+		foreach($nearby[array_search($area,$areas)] as $nearId){
+			foreach($workers as $work){
+				if ($areas[$nearId]===$work['area_name']){
+					return $work['login'];
+				}
+			}
+		}
+	} else{
+		return null;
+	}
+}
+
+
+// Вывод результата
+
+echo 'Worker login is: ';
+$Answer=findWorker('Центр');
+echo $Answer
 ?>
