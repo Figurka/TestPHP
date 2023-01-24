@@ -24,31 +24,73 @@
 
 # Использовать данные:
 # любые
-abstract class Transporter{
-    public $brand; // Наименование перевозчика
-    protected float $cost = 0; // Цена перевозки по умолчанию/минимальная цена перевозки
 
-    function __construct($brand,)
-    {
+// Первый вариант(не закончен) Причина: Наверное стоит идти от посылки, но такой варинт тоже возмможен.
+// abstract class Transporter{
+//     public $brand; // Наименование перевозчика
+//     protected float $cost = 0; // Цена перевозки по умолчанию/минимальная цена перевозки
+
+//     function __construct($brand,)
+//     {
        
 
-    }
-    // Метод расчета стоимости доставки.
-    abstract public function transitCost();
-};
+//     }
+//     // Метод расчета стоимости доставки.
+//     abstract public function transitCost();
+// };
 
-class DHL{
-    public $brand = 'DHL';
-    public function transitCost($weight){
-        $this->cost=$weight*100;
+// class DHL{
+//     public $brand = 'DHL';
+//     public function transitCost($weight){
+//         $this->cost=$weight*100;
+//         return $this->cost;
+//     }
+// };
+// class RussianPost{
+//     public $brand = 'Russian Post';
+//     public function transitCost($weight){
+//         $this->cost=($weight>10) ? 100: 1000;
+//     }
+// };
+
+
+// Вариант второй
+
+class Package{
+    public $adress;
+    public $client;
+    public $weight = 0;
+    public $cost = 0;
+
+    public function __construct($a,$b,$c)
+    {
+        $this->adress =$a;
+        $this->client =$b;
+        $this->weight =$c;
+    }
+    public function __call($name, $arguments)
+    {
+      return $name.count($arguments);
+    }
+    public function transitCost($transporter){
+        $this->cost=$transporter($this->weight);
         return $this->cost;
     }
 };
-class RussianPost{
-    public $brand = 'Russian Post';
-    public function transitCost($weight){
-        $this->cost=($weight>10) ? 100: 1000;
-    }
+
+
+function DHL($weight){
+            $cost=$weight*100;
+            return $cost;
+};
+function russianPost($weight){
+        $cost=($weight<=10) ? 100: 1000;
+        return $cost;
 };
 
+
+$a = new Package('x','z',11);
+echo $a->transitCost('DHL');
+echo $a->transitCost('russianPost');
+echo $a->transitCost('ussianPost');
 ?>
