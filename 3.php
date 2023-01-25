@@ -49,7 +49,7 @@
 // class RussianPost{
 //     public $brand = 'Russian Post';
 //     public function transitCost($weight){
-//         $this->cost=($weight>10) ? 100: 1000;
+//         $this->cost=($weight<=10) ? 100: 1000;
 //     }
 // };
 
@@ -62,7 +62,7 @@ class Package{
     public $weight = 0;
     public $cost = 0;
 
-    public function __construct($a,$b,$c)
+    public function __construct($a,$b,$c)//Не стал сильно продумывать возможные атрибуты, так как пока важен только вес.
     {
         $this->adress =$a;
         $this->client =$b;
@@ -73,8 +73,12 @@ class Package{
       return $name.count($arguments);
     }
     public function transitCost($transporter){
+        if (is_callable($transporter)){
         $this->cost=$transporter($this->weight);
         return $this->cost;
+    }else{
+        return 'Wrong Transporter';
+        }
     }
 };
 
@@ -89,8 +93,10 @@ function russianPost($weight){
 };
 
 
+
 $a = new Package('x','z',11);
 echo $a->transitCost('DHL');
 echo $a->transitCost('russianPost');
-echo $a->transitCost('ussianPost');
+echo $a->transitCost('ssianPost');
+
 ?>

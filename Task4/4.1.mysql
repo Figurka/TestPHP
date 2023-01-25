@@ -26,5 +26,12 @@ INSERT INTO users VALUES
   (DEFAULT, 'admin', '1990-01-01', NOW(), NOW()),
   (DEFAULT, 'third client', '1990-01-01', NOW(), NOW())
 
-SELECT users.name FROM users WHERE users.id IN
-(SELECT users.id FROM users JOIN orders ON users.id = orders.user_id)
+SELECT users.name 
+  FROM users 
+  WHERE users.id 
+  IN
+  (SELECT users.id 
+    FROM users 
+    JOIN orders 
+    ON users.id = orders.user_id
+  )

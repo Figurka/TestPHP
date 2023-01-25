@@ -30,4 +30,7 @@ INSERT INTO catalogs VALUES
   (DEFAULT, 'Video cards');
 
 
-SELECT products.name, catalogs.name FROM products LEFT JOIN catalogs ON products.catalog_id = catalogs.id
+SELECT products.name, catalogs.name 
+  FROM products 
+  LEFT JOIN catalogs 
+  ON products.catalog_id = catalogs.id
